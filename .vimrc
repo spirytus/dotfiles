@@ -167,6 +167,7 @@
     nnoremap <Tab> :bnext<CR>
     nnoremap <S-Tab> :bprevious<CR>
     nnoremap <Leader>x :bdelete<CR>
+
     " Fugitive and GIT {{{
     no <leader>gd :Gdiff<cr>
     nno <leader>gs :Gstatus<CR><C-W>15+
