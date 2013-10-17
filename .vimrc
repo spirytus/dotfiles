@@ -171,10 +171,9 @@
     no <leader>gd :Gdiff<cr>
     nno <leader>gs :Gstatus<CR><C-W>15+
     nno <leader>gw :Gwrite<cr>
-    nno <leader>ga :Git add %<cr>
     nno <leader>gps :Git push<cr>
     nno <leader>gpl :Git pull<cr>
-    nno <leader>gf :Git fetch<cr>
+    nno <leader>gf :Gil fetch<cr>
     nno <leader>gb :Gblame<cr>
     nno <leader>gco :Gcheckout<cr>
     nno <leader>gci :Gcommit<cr>
