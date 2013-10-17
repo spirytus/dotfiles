@@ -148,6 +148,7 @@
     map <Leader>m <esc>:tabnext<CR>
     nno <C-Right> gt
     nno <C-Left> gT
+
     set number
     autocmd! bufwritepost .vimrc source %
     " File explorer
