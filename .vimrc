@@ -30,7 +30,8 @@
           \     'unix' : 'make -f make_unix.mak',
           \    },
           \ }
-    NeoBundle 'klen/python-mode'
+    "NeoBundle 'klen/python-mode'
+    NeoBundle 'kevinw/pyflakes-vim'
     NeoBundleCheck
 
     " }}}
@@ -39,6 +40,7 @@
     set nocompatible
     set shell=/bin/zsh
     let mapleader=","
+    set ls=2
     set mouse=a
     syntax on
     filetype plugin indent on
@@ -66,7 +68,6 @@
         " }}}
         " Enable wildmenu {{{
         set wildmode=longest:full
-        set wildignorecase
         set wildmenu
         set wildignore=
         set wildignore+=.hg,.git,.svn,rel
@@ -81,7 +82,7 @@
         set statusline +=%1*\ %n\ %*            "buffer number
         set statusline +=%5*%{&ff}%*            "file format
         set statusline +=%3*%y%*                "file type
-        set statusline +=%4*\ %<%F%*            "full path
+        set statusline +=%t*            "full path
         set statusline +=%2*%m%*                "modified flag
         set statusline +=%1*%=%5l%*             "current line
         set statusline +=%2*/%L%*               "total lines
@@ -99,9 +100,9 @@
         
         " Replace word under cursor
         nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
-    " }}}
+    " }}}za
 "autocmd VimEnter * NERDTree
-"autocmd BufEnter * NERDTreeMirror
+"autocmd BufEnter * NERDTreeMirrzor
 "autocmd VimEnter * wincmd p
 
 " Language specific tabs & spaces
@@ -132,6 +133,7 @@
     " }}}
     " Python {{{
     autocmd FileType python set omnifunc=pythoncomplete#Complete
+    let g:pyflakes_use_quickfix = 0
     " }}}
 " Set how invisible characters are displayed
     set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:>,precedes:<
@@ -165,8 +167,8 @@
     let g:session_default_to_last = 0
     "}}}
     " Buffers
-    nnoremap <Tab> :bnext<CR>
-    nnoremap <S-Tab> :bprevious<CR>
+    nnoremap <Tab> :bnext!<CR>
+    nnoremap <S-Tab> :bprevious!<CR>
     nnoremap <Leader>x :bdelete<CR>
 
     " Fugitive and GIT {{{
