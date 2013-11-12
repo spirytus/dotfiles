@@ -1,4 +1,4 @@
-" Initialize {{{
+" Initialize vimrc{{{
     " Initial NeoBundle config {{{
     if has('vim_starting')
         set runtimepath+=~/.vim/bundle/neobundle.vim/
