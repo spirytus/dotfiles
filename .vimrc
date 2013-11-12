@@ -22,6 +22,8 @@
     NeoBundle 'moll/vim-bbye.git'
     NeoBundle 'jnurmine/Zenburn'
     NeoBundle 'Shougo/unite.vim'
+    NeoBundle 'kevinw/pyflakes-vim'
+    NeoBundle 'sjl/gundo.vim'
     NeoBundle 'Shougo/vimproc', {
           \ 'build' : {
           \     'windows' : 'make -f make_mingw32.mak',
@@ -151,7 +153,7 @@
 
     set number
     autocmd! bufwritepost .vimrc source %
-    " File explorer
+    " File explorer xx
     nnoremap <Leader>e :Ex<CR>
     " Color settings
     colorscheme zenburn
