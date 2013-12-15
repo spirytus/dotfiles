@@ -32,8 +32,7 @@
           \     'unix' : 'make -f make_unix.mak',
           \    },
           \ }
-    "NeoBundle 'klen/python-mode'
-    NeoBundle 'kevinw/pyflakes-vim'
+    NeoBundle 'klen/python-mode'
     NeoBundleCheck
 
     " }}}
@@ -91,7 +90,7 @@
         set statusline +=%1*%4v\ %*             "virtual column number
         set statusline +=%2*0x%04B\ %*          "character under cursor"
         " }}}
-        "Quickfix {{{
+    "Quickfix {{{
         nnoremap <Leader>q :copen<CR>
         nnoremap <Leader>qc :close<CR>
         nnoremap ]q :cnext<CR>
@@ -135,13 +134,18 @@
     " }}}
     " Python {{{
     autocmd FileType python set omnifunc=pythoncomplete#Complete
+    let g:pymode = 1
+    let g:pymode_virtualenv = 1
+    let g:pymode_trim_whitespaces = 1
+    let g:pymode_motion = 1
+    let g:pymode_folding = 1
     let g:pyflakes_use_quickfix = 0
     " }}}
 " Set how invisible characters are displayed
     set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:>,precedes:<
     nnoremap <silent><Leader>f :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
     nnoremap <silent><Leader>fs :Unite -buffer-name=files -start-insert file_rec/async<CR>
-    nnoremap <silent><Leader>r :Unite -resume -buffer-name=recent file_mru<CR>
+    nnoremap <silent><Leader>, :Unite -resume -buffer-name=recent file_mru<CR>
     nnoremap <silent><Leader>b :Unite -resume buffer<CR>
     nnoremap <silent><Leader>t :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
     map <c-j> <c-w>j
@@ -150,6 +154,7 @@
     map <c-h> <c-w>h
     map <Leader>n <esc>:tabprevious<CR>
     map <Leader>m <esc>:tabnext<CR>
+    map <Leader>. <esc>:sh<CR>
     nno <C-Right> gt
     nno <C-Left> gT
 
@@ -157,9 +162,10 @@
     autocmd! bufwritepost .vimrc source %
     " File explorer xx
     nnoremap <Leader>e :Ex<CR>
-    " Color settings
-    colorscheme zenburn
-"    set background=dark
+  " Color settings
+    set t_Co=256
+    colors koehler
+    set background=light
     " Sessions {{{
     map <Leader>ss :SessionSave<CR>
     map <Leader>so :SessionOpen<CR>
