@@ -53,6 +53,34 @@
 
     ino jj <Esc>
     ino jk <Esc>
+
+    " Set how invisible characters are displayed
+    set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:>,precedes:<
+
+    nnoremap <silent><Leader>f :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
+    nnoremap <silent><Leader>fs :Unite -buffer-name=files -start-insert file_rec/async<CR>
+    nnoremap <silent><Leader>, :Unite -resume -buffer-name=recent file_mru<CR>
+    nnoremap <silent><Leader>b :Unite -resume buffer<CR>
+    nnoremap <silent><Leader>t :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
+
+    map <c-j> <c-w>j
+    map <c-k> <c-w>k
+    map <c-l> <c-w>l
+    map <c-h> <c-w>h
+
+    map <Leader>n <esc>:tabprevious<CR>
+    map <Leader>m <esc>:tabnext<CR>
+    map <Leader>. <esc>:sh<CR>
+    nnoremap <Leader>e :Ex<CR>
+    nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+    nnoremap <silent><Leader>w :w<CR>
+
+    set number
+    autocmd! bufwritepost .vimrc source %
+    " Color settings
+    set t_Co=256
+    colors koehler
+    set background=light
         " Folding {{{
         set foldmethod=marker
         " }}}
@@ -96,20 +124,20 @@
         nnoremap ]q :cnext<CR>
         nnoremap [q :cprevious<CR>]
         " }}}
-        " <Leader>w saves
-        nnoremap <silent><Leader>w :w<CR>
-        
-        " Replace word under cursor
-        nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
-    " }}}za
-"autocmd VimEnter * NERDTree
-"autocmd BufEnter * NERDTreeMirrzor
-"autocmd VimEnter * wincmd p
+    " }}}
 
-" Language specific tabs & spaces
-    autocmd FileType erlang setlocal ts=8 sts=4 sw=4 expandtab
     " Language-specific settings {{{
+    " Python {{{
+    autocmd FileType python set omnifunc=pythoncomplete#Complete
+    let g:pymode = 1
+    let g:pymode_virtualenv = 1
+    let g:pymode_trim_whitespaces = 1
+    let g:pymode_motion = 1
+    let g:pymode_folding = 1
+    let g:pyflakes_use_quickfix = 0
+    " }}}
 " Erlang {{{
+        autocmd FileType erlang setlocal ts=8 sts=4 sw=4 expandtab
         set runtimepath^=~/.vim/bundle/vim-erlang-tags
         let g:erlang_folding = 1
         let g:erlang_use_conceal = 0
@@ -120,7 +148,7 @@
         set sua+=.erl
         set sua+=.hrl
         let erlang_path=substitute(system("which erl"), "/bin/erl", "/lib/**/src/", "")
-        exe ":set path+="."src/,deps/**/src/,apps/**/src/,**/include/," . erlang_path
+        "exe ":set path+="."src/,deps/**/src/,apps/**/src/,**/include/," . erlang_path
 
         "  jump to a module when there's no <cword> around
         function! GoToFile()
@@ -128,44 +156,20 @@
             let f = input('File/Module: ')
             call inputrestore()
             exec "find " . f
-        endfunction
+        endfunction         
         nore <C-g> :call GoToFile()<CR>
     " }}}
+    " GOLANG {{{
+    filetype off
+    set runtimepath+=$GOROOT/misc/vim
+    syntax on
+    autocmd FileType go autocmd BufWritePre <buffer> Fmt
+    au FileType go map <leader>r :!go run %<CR>
+    filetyp plugin on
+    inore <C-Space> <C-X><C-O>
     " }}}
-    " Python {{{
-    autocmd FileType python set omnifunc=pythoncomplete#Complete
-    let g:pymode = 1
-    let g:pymode_virtualenv = 1
-    let g:pymode_trim_whitespaces = 1
-    let g:pymode_motion = 1
-    let g:pymode_folding = 1
-    let g:pyflakes_use_quickfix = 0
     " }}}
-" Set how invisible characters are displayed
-    set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:>,precedes:<
-    nnoremap <silent><Leader>f :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
-    nnoremap <silent><Leader>fs :Unite -buffer-name=files -start-insert file_rec/async<CR>
-    nnoremap <silent><Leader>, :Unite -resume -buffer-name=recent file_mru<CR>
-    nnoremap <silent><Leader>b :Unite -resume buffer<CR>
-    nnoremap <silent><Leader>t :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
-    map <c-j> <c-w>j
-    map <c-k> <c-w>k
-    map <c-l> <c-w>l
-    map <c-h> <c-w>h
-    map <Leader>n <esc>:tabprevious<CR>
-    map <Leader>m <esc>:tabnext<CR>
-    map <Leader>. <esc>:sh<CR>
-    nno <C-Right> gt
-    nno <C-Left> gT
 
-    set number
-    autocmd! bufwritepost .vimrc source %
-    " File explorer xx
-    nnoremap <Leader>e :Ex<CR>
-  " Color settings
-    set t_Co=256
-    colors koehler
-    set background=light
     " Sessions {{{
     map <Leader>ss :SessionSave<CR>
     map <Leader>so :SessionOpen<CR>
@@ -174,10 +178,6 @@
     let g:session_autosave = 'prompt'
     let g:session_default_to_last = 0
     "}}}
-    " Buffers
-    nnoremap <Tab> :bnext!<CR>
-    nnoremap <S-Tab> :bprevious!<CR>
-    nnoremap <Leader>x :bdelete<CR>
 
     " Fugitive and GIT {{{
     no <leader>gd :Gdiff<cr>
@@ -191,6 +191,5 @@
     nno <leader>gci :Gcommit<cr>
     nno <leader>gm :Gmove<cr>
     nno <leader>gr :Gremove<cr>
-    nno <leader>gl :Shell git gl -18<cr>:wincmd \|<cr>
     " }}}
 " }}}
