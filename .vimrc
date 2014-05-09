@@ -1,3 +1,70 @@
+" Initialize vimrc{{{
+    " Initial NeoBundle config {{{
+    if has('vim_starting')
+        set runtimepath+=~/.vim/bundle/neobundle.vim/
+    endif
+    call neobundle#rc(expand('~/.vim/bundle/'))
+    NeoBundleFetch 'Shougo/neobundle.vim'
+    " }}}
+    " NeoBundle plugins {{{
+    NeoBundle 'aerosol/vimerl'
+    NeoBundle 'aerosol/vim-session'
+    NeoBundle 'aerosol/vimerl'
+    NeoBundle 'gcmt/taboo.vim.git'
+    NeoBundle 'kana/vim-smartinput'
+    NeoBundle 'gcmt/taboo.vim.git'
+    NeoBundle 'scrooloose/nerdcommenter'
+    NeoBundle 'tpope/vim-fugitive'
+    NeoBundle 'thinca/vim-ref.git'
+    NeoBundle 'hcs42/vim-erlang.git'
+    NeoBundle 'hcs42/vim-erlang-tags.git'
+    NeoBundle 'vim-scripts/ZoomWin'
+    NeoBundle 'moll/vim-bbye.git'
+    NeoBundle 'jnurmine/Zenburn'
+    NeoBundle 'Shougo/unite.vim'
+    NeoBundle 'kevinw/pyflakes-vim'
+    NeoBundle 'sjl/gundo.vim'
+    NeoBundle 'Lokaltog/vim-easymotion'
+    NeoBundle 'Shougo/vimproc', {
+          \ 'build' : {
+          \     'windows' : 'make -f make_mingw32.mak',
+          \     'cygwin' : 'make -f make_cygwin.mak',
+          \     'mac' : 'make -f make_mac.mak',
+          \     'unix' : 'make -f make_unix.mak',
+          \    },
+        \ }
+    NeoBundle 'klen/python-mode'
+    NeoBundleCheck
+
+    " }}}
+    " Basic settings {{{
+    let $VIM = expand('~/.vim/')
+    set nocompatible
+    set shell=/bin/zsh
+    let mapleader=","
+    set ls=2
+    set mouse=a
+    syntax on
+    filetype plugin indent on
+    set splitright
+    set splitbelow
+    set title
+    nno j gj
+    nno k gk
+
+    ino jj <Esc>
+    ino jk <Esc>
+
+    " Set how invisible characters are displayed
+    set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:>,precedes:<
+
+    nnoremap <silent><Leader>f :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
+    nnoremap <silent><Leader>fs :Unite -buffer-name=files -start-insert file_rec/async<CR>
+    nnoremap <silent><Leader>l :Unite -resume -buffer-name=recent file_mru<CR>
+    nnoremap <silent><Leader>b :Unite -resume buffer<CR>
+    nnoremap <silent><Leader>t :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
+
+    map <c-j> <c-w>j
     map <c-k> <c-w>k
     map <c-l> <c-w>l
     map <c-h> <c-w>h
