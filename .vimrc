@@ -21,9 +21,13 @@
     NeoBundle 'vim-scripts/ZoomWin'
     NeoBundle 'moll/vim-bbye.git'
     NeoBundle 'jnurmine/Zenburn'
+    NeoBundle 'w0ng/vim-hybrid'
     NeoBundle 'Shougo/unite.vim'
     NeoBundle 'kevinw/pyflakes-vim'
+    NeoBundle 'mattn/gist-vim'
+    NeoBundle 'mattn/webapi-vim'
     NeoBundle 'sjl/gundo.vim'
+    NeoBundle 'WolfgangMehner/lua-support'
     NeoBundle 'Lokaltog/vim-easymotion'
     NeoBundle 'Shougo/vimproc', {
           \ 'build' : {
@@ -46,9 +50,11 @@
     set mouse=a
     syntax on
     filetype plugin indent on
+    filetype plugin on
     set splitright
     set splitbelow
     set title
+    set backspace=indent,eol,start
     nno j gj
     nno k gk
 
@@ -61,7 +67,7 @@
     nnoremap <silent><Leader>f :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
     nnoremap <silent><Leader>fs :Unite -buffer-name=files -start-insert file_rec/async<CR>
     nnoremap <silent><Leader>l :Unite -resume -buffer-name=recent file_mru<CR>
-    nnoremap <silent><Leader>b :Unite -resume buffer<CR>
+    nnoremap <silent><Leader>bf :Unite -resume buffer<CR>
     nnoremap <silent><Leader>t :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
 
     map <c-j> <c-w>j
@@ -78,6 +84,7 @@
     nnoremap <Leader>x :q<CR>
     nnoremap <leader>gg :Gist -p<cr>
     nnoremap <leader>ggl :Gist -l<cr>
+    vnoremap <leader>gg :Gist -p<CR>
     nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
     nnoremap <Tab> :bnext!<CR>
     nnoremap <S-Tab> :bprevious!<CR>
@@ -87,7 +94,7 @@
     autocmd! bufwritepost .vimrc source %
     " Color settings
     set t_Co=256
-    colors koehler
+    colors hybrid
     set background=light
         " Folding {{{
         set foldmethod=marker
@@ -173,6 +180,7 @@
     syntax on
     autocmd FileType go autocmd BufWritePre <buffer> Fmt
     au FileType go map <leader>r :!go run %<CR>
+    au FileType go map <leader>t :!go test %<CR>
     filetyp plugin on
     inore <C-Space> <C-X><C-O>
     " }}}
@@ -186,6 +194,9 @@
     let g:session_autosave = 'prompt'
     let g:session_default_to_last = 0
     "}}}
+    " Lua {{{
+    map <Leader>u :! lua % <CR>
+    " }}}
 
     " Fugitive and GIT {{{
     no <leader>gd :Gdiff<cr>
