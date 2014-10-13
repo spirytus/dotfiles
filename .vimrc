@@ -3,16 +3,15 @@
     if has('vim_starting')
         set runtimepath+=~/.vim/bundle/neobundle.vim/
     endif
-    call neobundle#rc(expand('~/.vim/bundle/'))
+    call neobundle#begin(expand('~/.vim/bundle/'))
     NeoBundleFetch 'Shougo/neobundle.vim'
+    call neobundle#end()
     " }}}
     " NeoBundle plugins {{{
     NeoBundle 'aerosol/vimerl'
     NeoBundle 'aerosol/vim-session'
     NeoBundle 'aerosol/vimerl'
-    NeoBundle 'gcmt/taboo.vim.git'
     NeoBundle 'kana/vim-smartinput'
-    NeoBundle 'gcmt/taboo.vim.git'
     NeoBundle 'scrooloose/nerdcommenter'
     NeoBundle 'tpope/vim-fugitive'
     NeoBundle 'thinca/vim-ref.git'
@@ -23,12 +22,10 @@
     NeoBundle 'jnurmine/Zenburn'
     NeoBundle 'w0ng/vim-hybrid'
     NeoBundle 'Shougo/unite.vim'
-    NeoBundle 'kevinw/pyflakes-vim'
+    NeoBundle 'Shougo/neomru.vim'
     NeoBundle 'mattn/gist-vim'
     NeoBundle 'mattn/webapi-vim'
     NeoBundle 'sjl/gundo.vim'
-    NeoBundle 'WolfgangMehner/lua-support'
-    NeoBundle 'Lokaltog/vim-easymotion'
     NeoBundle 'Shougo/vimproc', {
           \ 'build' : {
           \     'windows' : 'make -f make_mingw32.mak',
@@ -38,6 +35,9 @@
           \    },
         \ }
     NeoBundle 'klen/python-mode'
+    NeoBundle 'tmhedberg/matchit'
+    NeoBundle 'xolox/vim-misc'
+    NeoBundle 'xolox/vim-lua-ftplugin'
     NeoBundleCheck
 
     " }}}
@@ -196,6 +196,7 @@
     "}}}
     " Lua {{{
     map <Leader>u :! lua % <CR>
+    let lua_complete_omni = 1
     " }}}
 
     " Fugitive and GIT {{{
