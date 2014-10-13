@@ -36,8 +36,8 @@
         \ }
     NeoBundle 'klen/python-mode'
     NeoBundle 'tmhedberg/matchit'
-    NeoBundle 'xolox/vim-misc'
     NeoBundle 'xolox/vim-lua-ftplugin'
+    NeoBundle 'vim-scripts/luarefvim'
     NeoBundleCheck
 
     " }}}
@@ -69,6 +69,7 @@
     nnoremap <silent><Leader>l :Unite -resume -buffer-name=recent file_mru<CR>
     nnoremap <silent><Leader>bf :Unite -resume buffer<CR>
     nnoremap <silent><Leader>t :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
+    nnoremap <silent><space>s :Unite -quick-match buffer<cr>
 
     map <c-j> <c-w>j
     map <c-k> <c-w>k
@@ -88,6 +89,7 @@
     nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
     nnoremap <Tab> :bnext!<CR>
     nnoremap <S-Tab> :bprevious!<CR>
+    nnoremap <S-[> :b#<CR>
     nnoremap <silent><Leader>w :w<CR>
 
     set number
@@ -203,6 +205,7 @@
     no <leader>gd :Gdiff<cr>
     nno <leader>gs :Gstatus<CR><C-W>15+
     nno <leader>gw :Gwrite<cr>
+    vno <leader>gw :Gwrite<cr>
     nno <leader>gps :Git push<cr>
     nno <leader>gpl :Git pull<cr>
     nno <leader>gf :Gil fetch<cr>
