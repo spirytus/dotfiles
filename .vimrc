@@ -11,7 +11,6 @@
     NeoBundle 'aerosol/vimerl'
     NeoBundle 'aerosol/vim-session'
     NeoBundle 'aerosol/vimerl'
-    NeoBundle 'kana/vim-smartinput'
     NeoBundle 'scrooloose/nerdcommenter'
     NeoBundle 'tpope/vim-fugitive'
     NeoBundle 'thinca/vim-ref.git'
@@ -48,6 +47,10 @@
     let mapleader=","
     set ls=2
     set mouse=a
+    set iskeyword+=.
+    set iskeyword+=:
+    set hidden
+
     syntax on
     filetype plugin indent on
     filetype plugin on
@@ -71,6 +74,8 @@
     nnoremap <silent><Leader>t :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
     nnoremap <silent><space>s :Unite -quick-match buffer<cr>
 
+    map <F11>  <Esc>:!ctags -R .<CR>
+
     map <c-j> <c-w>j
     map <c-k> <c-w>k
     map <c-l> <c-w>l
@@ -82,11 +87,12 @@
     nnoremap <leader>Ve :e $MYVIMRC<CR>
     nnoremap <leader>Ze :e ~/.zshrc<CR>
     nnoremap <Leader>e :Ex<CR>
-    nnoremap <Leader>x :q<CR>
+    nnoremap <Leader>x :bd<CR>
+    nnoremap <Leader>q :q<CR>
     nnoremap <leader>gg :Gist -p<cr>
     nnoremap <leader>ggl :Gist -l<cr>
-    vnoremap <leader>gg :Gist -p<CR>
     nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+    nnoremap <Leader>sc :%s/\<<C-r><C-w>\>/gc
     nnoremap <Tab> :bnext!<CR>
     nnoremap <S-Tab> :bprevious!<CR>
     nnoremap <S-[> :b#<CR>
