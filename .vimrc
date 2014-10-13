@@ -87,8 +87,8 @@
     nnoremap <leader>Ve :e $MYVIMRC<CR>
     nnoremap <leader>Ze :e ~/.zshrc<CR>
     nnoremap <Leader>e :Ex<CR>
-    nnoremap <Leader>x :bd<CR>
-    nnoremap <Leader>q :q<CR>
+    nnoremap <Leader>x :Bd<CR>
+    nnoremap <Leader>q :bd<CR>
     nnoremap <leader>gg :Gist -p<cr>
     nnoremap <leader>ggl :Gist -l<cr>
     nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
@@ -98,10 +98,19 @@
     nnoremap <S-[> :b#<CR>
     nnoremap <silent><Leader>w :w<CR>
 
+    " center when finding next word
+     nnoremap n nzz
+     nnoremap N Nzz
+     nnoremap * *zz
+     nnoremap # #zz
+     nnoremap g* g*zz
+     nnoremap g# g#zz
+
     set number
     autocmd! bufwritepost .vimrc source %
     " Color settings
     set t_Co=256
+
     colors hybrid
     set background=light
         " Folding {{{
