@@ -37,6 +37,7 @@
     NeoBundle 'tmhedberg/matchit'
     NeoBundle 'xolox/vim-lua-ftplugin'
     NeoBundle 'vim-scripts/luarefvim'
+    NeoBundle 'airblade/vim-gitgutter'
     NeoBundleCheck
 
     " }}}
