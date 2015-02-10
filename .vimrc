@@ -8,15 +8,17 @@
     call neobundle#end()
     " }}}
     " NeoBundle plugins {{{
-    NeoBundle 'aerosol/vimerl'
     NeoBundle 'aerosol/vim-session'
-    NeoBundle 'aerosol/vimerl'
     NeoBundle 'scrooloose/nerdcommenter'
+    NeoBundle 'scrooloose/syntastic'
     NeoBundle 'tpope/vim-fugitive'
     NeoBundle 'thinca/vim-ref.git'
-    NeoBundle 'hcs42/vim-erlang.git'
-    NeoBundle 'hcs42/vim-erlang-tags.git'
-    NeoBundle 'vim-scripts/ZoomWin'
+    NeoBundle 'vim-erlang/vim-erlang-compiler'
+    NeoBundle 'vim-erlang/vim-erlang-omnicomplete'
+    NeoBundle 'vim-erlang/vim-erlang-runtime'
+    NeoBundle 'vim-erlang/vim-erlang-tags'
+    NeoBundle 'vim-erlang/erlang-motions.vim'
+    NeoBundle 'regedarek/ZoomWin'
     NeoBundle 'moll/vim-bbye.git'
     NeoBundle 'jnurmine/Zenburn'
     NeoBundle 'w0ng/vim-hybrid'
@@ -25,6 +27,7 @@
     NeoBundle 'mattn/gist-vim'
     NeoBundle 'mattn/webapi-vim'
     NeoBundle 'sjl/gundo.vim'
+    NeoBundle 'rking/ag.vim'
     NeoBundle 'Shougo/vimproc', {
           \ 'build' : {
           \     'windows' : 'make -f make_mingw32.mak',
@@ -38,6 +41,8 @@
     NeoBundle 'xolox/vim-lua-ftplugin'
     NeoBundle 'vim-scripts/luarefvim'
     NeoBundle 'airblade/vim-gitgutter'
+    NeoBundle 'sjl/tslime.vim'
+    NeoBundle 'bling/vim-airline'
     NeoBundleCheck
 
     " }}}
@@ -45,7 +50,7 @@
     let $VIM = expand('~/.vim/')
     set nocompatible
     set shell=/bin/zsh
-    let mapleader=","
+    let mapleader=" "
     set ls=2
     set mouse=a
     set iskeyword+=.
@@ -58,6 +63,7 @@
     set splitright
     set splitbelow
     set title
+    set relativenumber
     set backspace=indent,eol,start
     nno j gj
     nno k gk
@@ -68,12 +74,34 @@
     " Set how invisible characters are displayed
     set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:>,precedes:<
 
-    nnoremap <silent><Leader>f :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
+    if executable('ag')
+        let g:unite_source_grep_command='ag'
+        let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
+        let g:unite_source_grep_recursive_opt=''
+    endif
+
+    let g:unite_source_history_yank_enable = 1
+    nnoremap <silent><Leader>f :Unite -no-split -buffer-name=files -start-insert -auto-preview file_rec/async<CR>
     nnoremap <silent><Leader>fs :Unite -buffer-name=files -start-insert file_rec/async<CR>
     nnoremap <silent><Leader>l :Unite -resume -buffer-name=recent file_mru<CR>
     nnoremap <silent><Leader>bf :Unite -resume buffer<CR>
     nnoremap <silent><Leader>t :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
-    nnoremap <silent><space>s :Unite -quick-match buffer<cr>
+    nnoremap <silent><leader>y :Unite -no-split -buffer-name=yank history/yank:<cr>
+    nnoremap <silent><leader>g :Unite -buffer-name=search grep:.<cr>
+    nnoremap <silent><space>sm :Unite -quick-match -auto-preview buffer<cr>
+
+    nno <leader>K :<C-u>Unite ref/erlang
+                \ -vertical -default-action=split<CR>
+    let g:ref_use_vimproc = 1
+    let g:ref_open = 'split'
+    let g:ref_cache_dir = expand($TMP . '/vim_ref_cache/')
+
+    let g:unite_source_rec_async_command='ag --nocolor --nogroup --skip-vcs-ignores --hidden -g ""'
+
+    "tslime
+    vmap <C-c><C-c> <Plug>SendSelectionToTmux
+    nmap <C-c><C-c> <Plug>NormalModeSendToTmux
+    nmap <C-c>r <Plug>SetTmuxVars
 
     map <F11>  <Esc>:!ctags -R .<CR>
 
@@ -85,8 +113,8 @@
     map <Leader>n <esc>:tabprevious<CR>
     map <Leader>m <esc>:tabnext<CR>
     map <Leader>. <esc>:sh<CR>
-    nnoremap <leader>Ve :e $MYVIMRC<CR>
-    nnoremap <leader>Ze :e ~/.zshrc<CR>
+    nnoremap <leader>ve :e $MYVIMRC<CR>
+    nnoremap <leader>ze :e ~/.zshrc<CR>
     nnoremap <Leader>e :Ex<CR>
     nnoremap <Leader>x :Bd<CR>
     nnoremap <Leader>q :bd<CR>
@@ -96,7 +124,6 @@
     nnoremap <Leader>sc :%s/\<<C-r><C-w>\>/gc
     nnoremap <Tab> :bnext!<CR>
     nnoremap <S-Tab> :bprevious!<CR>
-    nnoremap <S-[> :b#<CR>
     nnoremap <silent><Leader>w :w<CR>
 
     " center when finding next word
@@ -106,6 +133,7 @@
      nnoremap # #zz
      nnoremap g* g*zz
      nnoremap g# g#zz
+     nnoremap <C-]> <C-]>zz
 
     set number
     autocmd! bufwritepost .vimrc source %
@@ -170,8 +198,8 @@
     let g:pyflakes_use_quickfix = 0
     " }}}
 " Erlang {{{
+        let g:syntastic_erlang_checkers=['syntaxerl']
         autocmd FileType erlang setlocal ts=8 sts=4 sw=4 expandtab
-        set runtimepath^=~/.vim/bundle/vim-erlang-tags
         let g:erlang_folding = 1
         let g:erlang_use_conceal = 0
         map <silent> <C-F9> :w<CR>:!rebar eunit skip_deps=true<CR>
@@ -221,14 +249,16 @@
     no <leader>gd :Gdiff<cr>
     nno <leader>gs :Gstatus<CR><C-W>15+
     nno <leader>gw :Gwrite<cr>
-    vno <leader>gw :Gwrite<cr>
+    "vno <leader>gw :Gwrite `< `><cr>
     nno <leader>gps :Git push<cr>
     nno <leader>gpl :Git pull<cr>
     nno <leader>gf :Gil fetch<cr>
+    nno <leader>gfre :!git fetch origin
     nno <leader>gb :Gblame<cr>
     nno <leader>gco :Gcheckout<cr>
     nno <leader>gci :Gcommit<cr>
     nno <leader>gm :Gmove<cr>
     nno <leader>gr :Gremove<cr>
+    nno <leader>gre :!git remote 
     " }}}
 " }}}
