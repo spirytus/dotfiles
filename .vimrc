@@ -87,7 +87,7 @@
     nnoremap <silent><Leader>bf :Unite -resume buffer<CR>
     nnoremap <silent><Leader>t :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
     nnoremap <silent><leader>y :Unite -no-split -buffer-name=yank history/yank:<cr>
-    nnoremap <silent><leader>g :Unite -buffer-name=search grep:.<cr>
+    nnoremap <silent><leader>. :Unite -buffer-name=search grep:.<cr>
     nnoremap <silent><space>sm :Unite -quick-match -auto-preview buffer<cr>
 
     nno <leader>K :<C-u>Unite ref/erlang
