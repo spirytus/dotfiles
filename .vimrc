@@ -22,12 +22,13 @@
     NeoBundle 'moll/vim-bbye.git'
     NeoBundle 'jnurmine/Zenburn'
     NeoBundle 'w0ng/vim-hybrid'
-    NeoBundle 'Shougo/unite.vim'
-    NeoBundle 'Shougo/neomru.vim'
     NeoBundle 'mattn/gist-vim'
     NeoBundle 'mattn/webapi-vim'
-    NeoBundle 'sjl/gundo.vim'
     NeoBundle 'rking/ag.vim'
+    NeoBundle 'Shougo/unite.vim'
+    NeoBundle 'Shougo/neomru.vim'
+    NeoBundle 'Shougo/vimshell.vim'
+    NeoBundle 'Shougo/neocomplcache.vim'
     NeoBundle 'Shougo/vimproc', {
           \ 'build' : {
           \     'windows' : 'make -f make_mingw32.mak',
@@ -56,7 +57,7 @@
     set iskeyword+=.
     set iskeyword+=:
     set hidden
-
+    
     syntax on
     filetype plugin indent on
     filetype plugin on
@@ -76,19 +77,21 @@
 
     if executable('ag')
         let g:unite_source_grep_command='ag'
-        let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
+        let g:unite_source_grep_default_opts='--nocolor --nogroup -S'
         let g:unite_source_grep_recursive_opt=''
+        let g:unite_source_rec_async_command='ag --nocolor --nogroup --skip-vcs-ignores --hidden -g ""'
     endif
 
     let g:unite_source_history_yank_enable = 1
+    let g:neocomplcache_enable_at_startup = 1
     nnoremap <silent><Leader>f :Unite -no-split -buffer-name=files -start-insert -auto-preview file_rec/async<CR>
     nnoremap <silent><Leader>fs :Unite -buffer-name=files -start-insert file_rec/async<CR>
-    nnoremap <silent><Leader>l :Unite -resume -buffer-name=recent file_mru<CR>
-    nnoremap <silent><Leader>bf :Unite -resume buffer<CR>
+    nnoremap <silent><Leader>l :Unite -resume -buffer-name=recent -start-insert file_mru<CR>
+    nnoremap <silent><Leader>bf :Unite -resume buffer -start-insert<CR>
     nnoremap <silent><Leader>t :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
-    nnoremap <silent><leader>y :Unite -no-split -buffer-name=yank history/yank:<cr>
-    nnoremap <silent><leader>. :Unite -buffer-name=search grep:.<cr>
-    nnoremap <silent><space>sm :Unite -quick-match -auto-preview buffer<cr>
+    nnoremap <silent><leader>er :Unite ref/erlang -default-action=split -start-insert<cr>
+    nnoremap <silent><leader>g :Unite -buffer-name=search grep:.<cr>
+    nnoremap <silent><leader>sm :Unite -quick-match -auto-preview buffer<cr>
 
     nno <leader>K :<C-u>Unite ref/erlang
                 \ -vertical -default-action=split<CR>
@@ -113,18 +116,22 @@
     map <Leader>n <esc>:tabprevious<CR>
     map <Leader>m <esc>:tabnext<CR>
     map <Leader>. <esc>:sh<CR>
+    map <Leader>lo <esc>:lopen<CR>
     nnoremap <leader>ve :e $MYVIMRC<CR>
     nnoremap <leader>ze :e ~/.zshrc<CR>
+    nnoremap <leader>re :reg<CR>
     nnoremap <Leader>e :Ex<CR>
     nnoremap <Leader>x :Bd<CR>
-    nnoremap <Leader>q :bd<CR>
+    nnoremap <Leader>q <esc>:q<CR>
     nnoremap <leader>gg :Gist -p<cr>
     nnoremap <leader>ggl :Gist -l<cr>
     nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
     nnoremap <Leader>sc :%s/\<<C-r><C-w>\>/gc
+    nnoremap <Leader>sh :VimShell
     nnoremap <Tab> :bnext!<CR>
     nnoremap <S-Tab> :bprevious!<CR>
     nnoremap <silent><Leader>w :w<CR>
+    nnoremap <silent><Leader>wq :wq<CR>
 
     " center when finding next word
      nnoremap n nzz
@@ -134,11 +141,13 @@
      nnoremap g* g*zz
      nnoremap g# g#zz
      nnoremap <C-]> <C-]>zz
+     nnoremap <C-O> <C-O>zz
+     nnoremap <C-I> <C-I>zz
 
     set number
     autocmd! bufwritepost .vimrc source %
     " Color settings
-    set t_Co=256
+    "set t_Co=256
 
     colors hybrid
     set background=light
@@ -247,7 +256,7 @@
 
     " Fugitive and GIT {{{
     no <leader>gd :Gdiff<cr>
-    nno <leader>gs :Gstatus<CR><C-W>15+
+    nno <leader>gst :Gstatus<CR><C-W>15+
     nno <leader>gw :Gwrite<cr>
     "vno <leader>gw :Gwrite `< `><cr>
     nno <leader>gps :Git push<cr>
@@ -256,7 +265,7 @@
     nno <leader>gfre :!git fetch origin
     nno <leader>gb :Gblame<cr>
     nno <leader>gco :Gcheckout<cr>
-    nno <leader>gci :Gcommit<cr>
+    nno <leader>gc :Gcommit<cr>
     nno <leader>gm :Gmove<cr>
     nno <leader>gr :Gremove<cr>
     nno <leader>gre :!git remote 
