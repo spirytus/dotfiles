@@ -20,6 +20,7 @@
     NeoBundle 'vim-erlang/erlang-motions.vim'
     NeoBundle 'regedarek/ZoomWin'
     NeoBundle 'moll/vim-bbye.git'
+    NeoBundle 'tpope/vim-fireplace'
     NeoBundle 'jnurmine/Zenburn'
     NeoBundle 'w0ng/vim-hybrid'
     NeoBundle 'mattn/gist-vim'
@@ -73,7 +74,7 @@
     ino jk <Esc>
 
     " Set how invisible characters are displayed
-    set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:>,precedes:<
+set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:>,precedes:<
 
     if executable('ag')
         let g:unite_source_grep_command='ag'
@@ -84,6 +85,7 @@
 
     let g:unite_source_history_yank_enable = 1
     let g:neocomplcache_enable_at_startup = 1
+    let g:neocomplcache_force_overwrite_completefunc = 1
     nnoremap <silent><Leader>f :Unite -no-split -buffer-name=files -start-insert -auto-preview file_rec/async<CR>
     nnoremap <silent><Leader>fs :Unite -buffer-name=files -start-insert file_rec/async<CR>
     nnoremap <silent><Leader>l :Unite -resume -buffer-name=recent -start-insert file_mru<CR>
@@ -117,6 +119,7 @@
     map <Leader>m <esc>:tabnext<CR>
     map <Leader>. <esc>:sh<CR>
     map <Leader>lo <esc>:lopen<CR>
+
     nnoremap <leader>ve :e $MYVIMRC<CR>
     nnoremap <leader>ze :e ~/.zshrc<CR>
     nnoremap <leader>re :reg<CR>
@@ -127,8 +130,7 @@
     nnoremap <leader>ggl :Gist -l<cr>
     nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
     nnoremap <Leader>sc :%s/\<<C-r><C-w>\>/gc
-    nnoremap <Leader>sh :VimShell
-    nnoremap <Tab> :bnext!<CR>
+    nnoremap <Leader>sh :VimShell<CR>
     nnoremap <S-Tab> :bprevious!<CR>
     nnoremap <silent><Leader>w :w<CR>
     nnoremap <silent><Leader>wq :wq<CR>
@@ -205,6 +207,7 @@
     let g:pymode_motion = 1
     let g:pymode_folding = 1
     let g:pyflakes_use_quickfix = 0
+    let g:pymode_rope = 0
     " }}}
 " Erlang {{{
         let g:syntastic_erlang_checkers=['syntaxerl']
@@ -258,7 +261,6 @@
     no <leader>gd :Gdiff<cr>
     nno <leader>gst :Gstatus<CR><C-W>15+
     nno <leader>gw :Gwrite<cr>
-    "vno <leader>gw :Gwrite `< `><cr>
     nno <leader>gps :Git push<cr>
     nno <leader>gpl :Git pull<cr>
     nno <leader>gf :Gil fetch<cr>
@@ -269,5 +271,7 @@
     nno <leader>gm :Gmove<cr>
     nno <leader>gr :Gremove<cr>
     nno <leader>gre :!git remote 
+
+    nnoremap <Tab> :bnext!<CR>
     " }}}
 " }}}
