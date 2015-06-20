@@ -9,10 +9,17 @@
     " }}}
     " NeoBundle plugins {{{
     NeoBundle 'aerosol/vim-session'
+    NeoBundle 'kmnk/vim-unite-giti'
+    NeoBundle 'christoomey/vim-tmux-navigator'
     NeoBundle 'scrooloose/nerdcommenter'
     NeoBundle 'scrooloose/syntastic'
     NeoBundle 'tpope/vim-fugitive'
-    NeoBundle 'thinca/vim-ref.git'
+    NeoBundle 'tpope/vim-dispatch'
+    NeoBundle 'tpope/vim-sexp-mappings-for-regular-people'
+    NeoBundle 'tpope/vim-fireplace'
+    NeoBundle 'tpope/vim-leiningen'
+    NeoBundle 'gcmt/wildfire.vim'
+    "NeoBundle 'thinca/vim-ref.git'
     NeoBundle 'vim-erlang/vim-erlang-compiler'
     NeoBundle 'vim-erlang/vim-erlang-omnicomplete'
     NeoBundle 'vim-erlang/vim-erlang-runtime'
@@ -20,9 +27,9 @@
     NeoBundle 'vim-erlang/erlang-motions.vim'
     NeoBundle 'regedarek/ZoomWin'
     NeoBundle 'moll/vim-bbye.git'
-    NeoBundle 'tpope/vim-fireplace'
     NeoBundle 'jnurmine/Zenburn'
     NeoBundle 'w0ng/vim-hybrid'
+    NeoBundle 'whatyouhide/vim-gotham'
     NeoBundle 'mattn/gist-vim'
     NeoBundle 'mattn/webapi-vim'
     NeoBundle 'rking/ag.vim'
@@ -45,6 +52,7 @@
     NeoBundle 'airblade/vim-gitgutter'
     NeoBundle 'sjl/tslime.vim'
     NeoBundle 'bling/vim-airline'
+    NeoBundle 'lervag/vimtex'
     NeoBundleCheck
 
     " }}}
@@ -66,6 +74,8 @@
     set splitbelow
     set title
     set relativenumber
+    set incsearch
+    "set hlsearch
     set backspace=indent,eol,start
     nno j gj
     nno k gk
@@ -86,17 +96,23 @@ set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:>,precedes:<
     let g:unite_source_history_yank_enable = 1
     let g:neocomplcache_enable_at_startup = 1
     let g:neocomplcache_force_overwrite_completefunc = 1
-    nnoremap <silent><Leader>f :Unite -no-split -buffer-name=files -start-insert -auto-preview file_rec/async<CR>
-    nnoremap <silent><Leader>fs :Unite -buffer-name=files -start-insert file_rec/async<CR>
+
+    nnoremap <silent><Leader>f :Unite -buffer-name=files -start-insert file_rec/async<CR>
+    nnoremap <silent><Leader>fs :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
     nnoremap <silent><Leader>l :Unite -resume -buffer-name=recent -start-insert file_mru<CR>
     nnoremap <silent><Leader>bf :Unite -resume buffer -start-insert<CR>
     nnoremap <silent><Leader>t :Unite -no-split -buffer-name=files -start-insert file_rec/async<CR>
     nnoremap <silent><leader>er :Unite ref/erlang -default-action=split -start-insert<cr>
-    nnoremap <silent><leader>g :Unite -buffer-name=search grep:.<cr>
+    nnoremap <silent><leader>ag :Unite -buffer-name=search grep:.<cr>
     nnoremap <silent><leader>sm :Unite -quick-match -auto-preview buffer<cr>
 
     nno <leader>K :<C-u>Unite ref/erlang
                 \ -vertical -default-action=split<CR>
+
+    let g:gist_open_browser_after_post = 1
+
+    let g:erlang_tags_ignore = '_rel'
+
     let g:ref_use_vimproc = 1
     let g:ref_open = 'split'
     let g:ref_cache_dir = expand($TMP . '/vim_ref_cache/')
@@ -194,7 +210,7 @@ set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:>,precedes:<
         nnoremap <Leader>q :copen<CR>
         nnoremap <Leader>qc :close<CR>
         nnoremap ]q :cnext<CR>
-        nnoremap [q :cprevious<CR>]
+        nnoremap [q :cprevious<CR>
         " }}}
     " }}}
 
@@ -255,6 +271,16 @@ set listchars=tab:▸\ ,eol:¬,trail:\ ,extends:>,precedes:<
     " Lua {{{
     map <Leader>u :! lua % <CR>
     let lua_complete_omni = 1
+    " }}}
+    " Clojure {{{
+    "nmap <buffer> K <Plug>FireplaceK
+    nnoremap <leader>cv :Eval<CR>
+    vnoremap <leader>cv :Eval<CR>
+    " }}}
+
+    " Dispatch {{{
+    autocmd FileType lua let b:dispatch = 'make test-lua'
+    nnoremap <F9> :Dispatch make test-lua<CR>
     " }}}
 
     " Fugitive and GIT {{{
